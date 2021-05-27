@@ -1,5 +1,7 @@
 <template>
-$END$
+  <div class="v-select">
+
+  </div>
 </template>
 
 <script>

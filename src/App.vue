@@ -1,26 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="hello">
+    <v-main-wrapper />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import vMainWrapper from './components/v-main-wrapper'
+import firebase from "firebase";
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  vMainWrapper
+
+  },
+  created() {
+    let vm = this
+    firebase.auth().onAuthStateChanged((user) => {
+        vm.$store.dispatch('STATE_CHANGED', user)
+    });
+    this.$store.dispatch('LOAD_PRODUCTS');
   }
 }
 </script>
 
 <style>
-#app {
+
+html {
+  background-color:#F9F9F9;
+}
+.hello {
+  background-color:#F9F9F9;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
