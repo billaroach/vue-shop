@@ -5,7 +5,6 @@
         Cart: {{ Object.keys(this.cart).length }}
       </div>
     </router-link>
-
     <h1 class="head">Каталог товаров</h1>
     <div class="v-catalog__sidebar">
       <p>Категории товаров:</p>
@@ -16,39 +15,36 @@
       </select>
       <p>Диапазон цены:</p>
       <div class="v-catalog__range-radiolist">
+        <label for="range-4">Без ограничений</label>
+        <input type="radio" id="range-4" value=1000000 v-model.number="max_price">
         <label for="range-1" >До 1000 Р:</label>
         <input type="radio" id="range-1" value=1000 v-model.number="max_price">
         <label for="range-2">До 5000 Р:</label>
         <input type="radio" id="range-2" value=5000 v-model.number="max_price">
         <label for="range-3">До 12000 Р:</label>
         <input type="radio" id="range-3" value=12000 v-model.number="max_price">
-        <label for="range-4">Без ограничений</label>
-        <input type="radio" id="range-4" value=50000 v-model.number="max_price">
       </div>
-
     </div>
-
     <div class="v-catalog__list">
-      <v-catalog-item
+     <v-catalog-item
       v-for="product in filteredProducts"
       :key="product.id"
       :product_data="product"
       @addToCart="AddToItems"/>
     </div>
-
   </div>
 </template>
 
 <script>
 import vCatalogItem from './v-catalog-item'
+import InfiniteLoading from 'vue-infinite-loading'
 import {mapActions, mapGetters} from 'vuex'
 import {db} from "@/main";
-
 export default {
   name: "v-catalog",
   components: {
     vCatalogItem,
-
+    //InfiniteLoading
   },
   props: {},
   data() {
@@ -60,14 +56,16 @@ export default {
       selectedType: null,
       sortedProducts: [],
       min_price: 0,
-      max_price: 0
-
+      max_price: 0,
     }
   },
   computed: {
     ...mapGetters([
         'Products',
-        'cart'
+        'cart',
+        'resultData',
+        'userName',
+        'userId'
     ]),
     filteredProducts() {
       if(this.selectedType === null) {
@@ -77,30 +75,17 @@ export default {
         return this.Products.filter(p => p.type === this.selectedType && p.price < parseInt(this.max_price));
       }
     }
-
   },
   methods: {
     ...mapActions([
-
         'addToCart',
-        'LOAD_PRODUCTS'
+        'LOAD_PRODUCTS',
     ]),
     AddToItems(data) {
       this.addToCart(data);
     },
-    getMinMax(arr) {
-      let min = arr[0];
-      let max = arr[0];
-      let i = arr.length;
 
-      while (i--) {
-        min = arr[i] < min ? arr[i] : min;
-        max = arr[i] > max ? arr[i] : max;
-     }
-      return { min, max };
-    }
   },
-
   mounted() {
     /*this.GET_PRODUCTS_FROM_API()
     .then((response) => {
@@ -109,12 +94,11 @@ export default {
       }
     })*/
     this.LOAD_PRODUCTS()
-    .then((response) => {
-      if(response) {
-        console.log("Data arrived!")
-      }
-    })
-
+        .then((response) => {
+          if(response) {
+            console.log("Data arrived!")
+          }
+        })
   },
   created() {
     db.collection("products").get().then((querySnapshot) => {
@@ -128,6 +112,8 @@ export default {
       console.log(this.min_price);
       console.log(this.max_price);*/
     });
+    console.log(this.userId);
+    console.log(this.userName);
   },
 }
 </script>
@@ -144,7 +130,11 @@ export default {
       flex-wrap: wrap;
       //justify-content: space-between;
       align-items: center;
-      padding-top: 50px;
+      margin-top: 50px;
+      padding: 15px 45px;
+      border-radius: 15px;
+      background-color: #F9F9F9;
+      box-shadow: 0 0 8px 0 #e0e0e0;
     }
     &__checkout {
       position: fixed;
@@ -159,6 +149,7 @@ export default {
       left: 10px;
       padding: $padding*2;
       border: solid 1px #aeaeae;
+      border-radius: 15px;
     }
 
     &__range-radiolist {
@@ -166,7 +157,15 @@ export default {
       flex-direction: column;
       align-items: center;
     }
+    .v-catalog-item {
+      flex-basis: 33%;
+      box-shadow: 0 0 8px 0 #e0e0e0;
+      padding: $padding*2;
+      margin-bottom: $margin*2;
 
-
+      &__image {
+        width: 180px;
+      }
+    }
   }
 </style>

@@ -5,12 +5,11 @@
       <h2>Your goods are on their way to you!</h2>
       <span class="checkout-box__ord-number">Номер заказа</span>
       <div class="checkout-box__goods">
-        Здесь будет список товаров из корзины
+        <v-profile></v-profile>
       </div>
       <div class="checkout-box__shipping">
         Здесь будет имя и адрес покупателя
       </div>
-      <div>Нужна функция очищения корзины при конфирме</div>
       <button class="btn btn-primary">Получить корзину</button>
       <router-link :to="{name: 'catalog'}">
         <button class="btn btn-to-catalog" @click="setOrder" type="submit">

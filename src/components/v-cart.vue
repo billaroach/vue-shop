@@ -17,7 +17,7 @@
           <p>{{item.description}}</p>
         </div>
         <div class="v-cart-item__quantity">
-          <p>Qty:</p>
+          <p>Кол-во:</p>
           <select
               name="quantity"
               v-model="item.qt"
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="v-cart__total" v-if="Object.keys(cart).length">
-      <p class="total__name">Total: <br></p>
+      <p class="total__name">Заказ на сумму: <br></p>
       <div class="total__value">
         <p> {{ Total }}</p>
       </div>

@@ -24,6 +24,7 @@ const store = new Vuex.Store({
         delProduct: {},
         TotalPositions: 0,
         Total: 0,
+        shipping: null,
 
         // service section
         processing: false,
@@ -33,10 +34,12 @@ const store = new Vuex.Store({
         user: {
             isAuthenticated: false,
             uid: null,
-            name: null
+            name: ""
         },
+        lastDocSnapshot: null,
+        userData: defaultUserData,
 
-        userData: defaultUserData
+        result_data: null
     },
     mutations: {                                                                        // штука, с помощью которых мы меняем данные в состояниях;
         SET_PRODUCTS_TO_STATE: (state, products)   => {                                 // мутации синхронны (если вызовем одновременно 2 мутации,
@@ -107,7 +110,12 @@ const store = new Vuex.Store({
 
         ADD_USER_ORDER(state, payload) {
             state.userData.orders = payload.order;
+        },
+
+        SET_ORDER_SHIPPING(state, payload) {
+            state.shipping = payload
         }
+
 
 
     },
@@ -129,7 +137,7 @@ const store = new Vuex.Store({
                 })
         },*/
         // firestore
-        LOAD_PRODUCTS({commit}) {
+         LOAD_PRODUCTS({commit}) {
             db.collection("products").get().then((querySnapshot) => {
                 let products = []
                 querySnapshot.forEach((doc) => {
@@ -228,6 +236,7 @@ const store = new Vuex.Store({
                 commit('SET_USER', payload.uid);
                 commit('SET_USER_NAME', payload.displayName);
                 console.log(payload.displayName)
+                this.user.name = payload.displayName;
                 commit('LOAD_USER_DATA', payload.uid);
             }
             else {
@@ -263,7 +272,8 @@ const store = new Vuex.Store({
             let order = {
                 addedDate: new Date(),
                 amount: getters.Total,
-                items: getters.cart
+                items: getters.cart,
+                address: payload.address
             }
 
             userDataRef.set({
@@ -319,11 +329,17 @@ const store = new Vuex.Store({
         TotalPositions: ({TotalPositions}) => TotalPositions,
         Products: ({products}) => products,
 
+
         getProcessing: (state) => state.processing,
         getError:(state) => state.error,
         isUserAuthenticated:(state) => state.user.isAuthenticated,
         userData:(state) => state.userData,
         userId:(state) => state.user.uid,
+        userName: (state) => state.user.name,
+        orderShippingData: (state) => state.shipping,
+        resultData: (state) => state.result_data,
+        state: () => this.state,
+        lastOrderDate: (state) => state.userData.orders.order.addedDate
     },
 });
 

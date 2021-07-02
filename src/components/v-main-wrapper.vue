@@ -2,28 +2,44 @@
   <div class="v-main-wrapper">
     <div class="v-main-wrapper__toolbar toolbar">
       <div class="toolbar__item" v-if="!isUserAuthenticated">
-        <router-link to="signup" >Регистрация</router-link>
+        <router-link to="signup" >
+          <button class="btn-toolbar">Регистрация</button>
+        </router-link>
       </div>
       <div class="toolbar__item" v-if="!isUserAuthenticated">
-        <router-link to="signin" >Войти</router-link>
+        <router-link to="signin" >
+          <button class="btn-toolbar">Войти</button>
+        </router-link>
       </div>
       <div class="toolbar__item" v-if="isUserAuthenticated">
-        <router-link @click.prevent="signout" to="about" >Выйти</router-link>
+        <router-link @click.prevent="signout" to="about" >
+          <button class="btn-toolbar">Выйти</button>
+        </router-link>
       </div>
       <div class="toolbar__item" v-if="isUserAuthenticated">
-        <router-link to="admin" >Панель БД</router-link>
+        <router-link to="admin" >
+          <button class="btn-toolbar">Панель БД</button>
+        </router-link>
       </div>
       <div class="toolbar__item" v-if="isUserAuthenticated">
-        <router-link to="profile" >Профиль</router-link>
+        <router-link to="profile" >
+          <button class="btn-toolbar">Профиль</button>
+        </router-link>
       </div>
       <div class="toolbar__item">
-        <router-link to="/">Главная</router-link>
+        <router-link to="/">
+          <button class="btn-toolbar">Главная</button>
+        </router-link>
       </div>
       <div class="toolbar__item">
-        <router-link to="about">О сайте</router-link>
+        <router-link to="about">
+          <button class="btn-toolbar">О сайте</button>
+        </router-link>
       </div>
       <div class="toolbar__item">
-        <a href="https://github.com/billaroach">GitHub</a>
+        <a href="https://github.com/billaroach">
+          <button class="btn-toolbar">GitHub</button>
+        </a>
       </div>
 
     </div>
@@ -93,15 +109,21 @@ export default {
       width: 900px;
       margin: 0 auto;
       padding: 10px;
-      border: 1px solid gray;
-      border-radius: 5px;
 
-
-      &__item {
-
-      }
      }
   }
+ .btn-toolbar {
+   border-radius: 15px;
+   border: none;
+   padding: 5px 15px;
 
+   &:hover {
+     color: violet;
+   }
+ }
+  a {
+    text-decoration: none;
+    list-style: none;
+  }
 
 </style>

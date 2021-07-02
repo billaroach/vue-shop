@@ -125,14 +125,11 @@ name: "v-admin",
     ])
   },
   methods: {
-  showAllDocs() {
-
-  },
     addProduct() {
       let vm = this
       vm.$store.dispatch('ADD_PRODUCT', {
-        id: this.id, title: this.title,
-        description: this.description, price: this.price, type: this.type, imageURL: this.imageURL
+        id: parseInt(this.id), title: this.title,
+        description: this.description, price: parseInt(this.price), type: this.type, imageURL: this.imageURL
       })
     },
     deleteProduct() {

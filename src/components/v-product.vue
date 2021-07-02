@@ -2,10 +2,11 @@
   <div class="v-product">
 
     <div class="v-profile__order-item">
-      <img class="v-order-item__image" :src=product.imageURL alt="img">
+      <div class="v-profile__img-container">
+        <img class="v-order-item__image" :src=product.imageURL alt="img">
+      </div>
       <div class="v-order-item__text-info">
-        <p class="v-profile__section-name">Название:</p>
-        <p >{{product.title}}</p>
+        <h3>{{product.title}}</h3>
         <p class="v-profile__section-name">Стоимость единицы:</p>
         <p>{{product.price}} Р</p>
         <p class="v-profile__section-name">Описание:</p>
@@ -91,6 +92,16 @@ name: "v-product",
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
+
+  &__img-container {
+
+  }
+
+
+}
+
+.v-order-item__image {
+  width: 350px;
 }
 
 </style>

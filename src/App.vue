@@ -24,7 +24,10 @@ export default {
 </script>
 
 <style>
-
+a {
+  text-decoration: none;
+  list-style: none;
+}
 html {
   background-color:#F9F9F9;
 }

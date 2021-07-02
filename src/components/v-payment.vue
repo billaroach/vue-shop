@@ -6,22 +6,21 @@
         <h2>Shipping</h2>
         <h3>Please enter your shipping details.</h3>
         <div class="section section2">
-          <input placeholder="First name">
-          <input placeholder="Last name">
+          <input class="ship-input" placeholder="First name">
+          <input class="ship-input" placeholder="Last name">
         </div>
-        <div class="section">
-          <input placeholder="Address">
+        <div class="section section1">
+          <input class="ship-input" id="country" v-model="country_data" placeholder="Country">
         </div>
-        <div class="section">
-          <input placeholder="Country">
+        <div class="section section1">
+          <input class="ship-input" id="address" v-model="address_data" placeholder="Address">
         </div>
         <div class="section section3">
-          <input placeholder="ZIP Code">
-          <input placeholder="City">
-          <input placeholder="State">
+          <input class="ship-input" placeholder="ZIP Code">
+          <input class="ship-input" placeholder="City">
+          <input class="ship-input" placeholder="State">
         </div>
         <div ref="paypal"></div>
-
       </div>
     </div>
   </div>
@@ -36,11 +35,9 @@ name: "v-payment",
   return {
     loaded: false,
     paidFor: false,
-    product: {
-      price: 777.77,
-      description: 'leg lamp from that one movie',
-      img: '../assets/logo.png '
-    }
+    address_data: '',
+    country_data: '',
+    shipping_data: ''
   }
 },
   mounted: function () {
@@ -66,7 +63,6 @@ name: "v-payment",
               return actions.order.create({
                 purchase_units: [
                   {
-                    description: this.product.description,
                     amount: {
                       currency_code: "RUB",
                       value: Math.round(this.Total)
@@ -81,6 +77,7 @@ name: "v-payment",
               this.paidFor = true;
               console.log(order);
               console.log(this.cart);
+              this.shipping_data = this.country_data + " " + this.address_data;
               this.$router.push('checkout');
             },
             onError: err => {
@@ -100,8 +97,13 @@ name: "v-payment",
   position: relative;
 }
   .section {
-    display: block;
+    display: flex;
     padding-bottom: 25px;
+    margin: 0 auto;
+  }
+
+  .section1 {
+
   }
 
   .section2 {
@@ -114,18 +116,26 @@ name: "v-payment",
     flex-wrap: wrap;
   }
 
+  .section1 input {
+    width: 450px;
+    margin: 0 auto;
+  }
+
   .section2 input {
     max-width: 100px;
+    margin: 0 auto;
   }
 
   .section3 input {
     max-width: 66px;
+    margin: 0 auto;
   }
 
   .section input {
     border: 1px solid gray;
     text-align: center;
     min-width: 200px;
+    border-radius: 15px;
   }
 
   .section input::placeholder {
@@ -144,10 +154,20 @@ name: "v-payment",
   }
 
   .shipping-form {
-    padding: 20px 0px 20px 60px;
+    padding: 20px 60px;
     margin-top: 40px;
     box-shadow: 0px 5px 15px rgba(62, 75, 102, 0.15);
     border: 1px solid #f3f3f3;
     border-radius: 15px;
+
+
+  }
+
+.shipping-form h2, h3{
+  text-align: center;
+}
+
+  .ship-input {
+
   }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div class="v-catalog-item">
-<!--    <img class="v-catalog-item__image" :src="require ('../assets/images/' + product_data.image)" alt="img">-->
     <img class="v-catalog-item__image" :src=product_data.imageURL alt="img">
     <p class="v-catalog_item__name">{{product_data.title}}</p>
     <p class="v-catalog_item__price]">Price: {{ product_data.price }} P</p>
@@ -43,7 +42,7 @@ export default {
 
 <style lang="scss">
   .v-catalog-item {
-    flex-basis: 25%;
+
     box-shadow: 0 0 8px 0 #e0e0e0;
     padding: $padding*2;
     margin-bottom: $margin*2;

@@ -23,7 +23,11 @@
       </div>
       <div class="v-order-item__amount">
         <span class="v-profile__section-name">Общая стоимость заказа:</span>
-        <span>{{last_order_amount}} Р</span>
+        <p>{{last_order_amount}}Р</p>
+        <span class="v-profile__section-name">Дата и время заказа:</span>
+        <p>{{last_order_date}}</p>
+        <span class="v-profile__section-name">Имя покупателя:</span>
+        <p>{{userName}}</p>
       </div>
     </div>
 
@@ -42,6 +46,7 @@ export default {
     return {
       last_order: null,
       last_order_amount: null,
+      last_order_date: null
 
     }
   },
@@ -59,7 +64,9 @@ export default {
         'cart',
         'Total',
         'TotalPositions',
-        'userId'
+        'userId',
+        'userName',
+        'lastOrderDate'
       ])
     },
     mounted() {
@@ -70,6 +77,7 @@ export default {
           console.log("Document data:", doc.data().orders.order.items);
           this.last_order = doc.data().orders.order.items;
           this.last_order_amount = doc.data().orders.order.amount;
+          this.last_order_date = doc.data().orders.order.addedDate.toDate() ;
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -119,7 +127,7 @@ export default {
 }
 
 .v-order-item__amount {
-  max-height: 150px;
+  max-height: 300px;
   padding: 30px;
   margin-left: 100px;
   border: 1px solid gray;
@@ -133,5 +141,10 @@ export default {
   flex-direction: column;
 
 
+}
+
+.v-order-item__image {
+  width: 400px;
+  height: 400px;
 }
 </style>
